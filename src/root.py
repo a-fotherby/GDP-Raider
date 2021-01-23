@@ -1,6 +1,8 @@
-from flask import Flask
+from flask import Flask, request
 import redis
 from werkzeug.utils import secure_filename
+
+import send_request as sr
 
 app = Flask(__name__)
 
@@ -34,10 +36,12 @@ def addcompany(company, details):
 def getemailtext(kind):
     return ""
 
-@app.route('/api/sendemail/<username>')
-def sendemail(username):
-    text = ""
-    pass
+@app.route('/api/send-request/<username>')
+def send_email(username):
+    msg = request.form['email-text']
+    src = request.form['sender']
+    dst = request.form['destination']
+    sr.send_email(msg, src, dst)
 
 @app.route('/api/getemails/<username>/<company>')
 def getemails(username, company):
