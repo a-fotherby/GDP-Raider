@@ -36,7 +36,7 @@ def addcompany(company, details):
 def getemailtext(kind):
     return ""
 
-@app.route('/api/send-request/<username>')
+@app.route('/api/send-email/<username>')
 def send_email(username):
     msg = request.form['email-text']
     src = request.form['sender']
