@@ -14,7 +14,7 @@ if __name__ == "__main__":
     import argparse
 
     args = argparse.ArgumentParser()
-    args.add_argument('sender', list, "User's email address.")
+    args.add_argument('sender', str, "User's email address.")
     args.add_argument('target_email', str, 'Email address you want to send to.')
     args.add_argument('user_name', str, 'Name of the user, e.g. Richard Head.')
     args.add_argument('login_credentials', list, 'Name of the user, e.g. Richard Head.')
