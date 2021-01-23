@@ -1,5 +1,8 @@
-def request_template(sender, receiver, user_name, company_name):
+def request_template(sender, receiver, user_name, login_credentials):
     """Initial email to request GDPR data from a company."""
+    
+    login_string=compose_list(login_credentials)
+    
     template = f"""\
 Subject: GDPR Request
 To: {receiver}
@@ -8,6 +11,10 @@ From: {sender}
 To Whom It May Concern:
 
 I am hereby requesting access according to Article 15 GDPR. Please confirm whether or not you are processing personal data (as defined by Article 4(1) and (2) GDPR) concerning me.
+
+The data is associated with the following login credentials:
+
+{login_string}
 
 In case you are, I am hereby requesting access to the following information pursuant to Article 15 GDPR:
 
@@ -40,12 +47,11 @@ Yours sincerely,
 
     return template
 
-def removal_template(sender, receiver, user_name, removal_list):
+def removal_template(sender, receiver, user_name, removal_list, login_credentials):
     
-    data_to_remove = ""
-    for entry in removal_list:
-        data_to_remove += ("- {}\n".format(entry))
+    removal_string = compose_list(removal_list)
     
+    login_string = compose_list(login_credentials)
     
     template = f"""\
 Subject: GDPR Request
@@ -57,13 +63,10 @@ In accordance with Article 17 of the European General Data Protection Regulation
 
 Please delete the following information associated with my accounts:
 
-{data_to_remove}
+{removal_string}
 Accounts may be associated with the following login credentials.
 
-Email addresses: [list your email addresses]
-Phone number: [list your email phone numbers]
-User name: [list your user names]
-
+{login_string}
 Please confirm when this operation has been completed.
 
 Best wishes,
@@ -94,3 +97,13 @@ Best wishes,
 """
     
     return None
+
+def compose_bullet_list(lst):
+    
+    bullet_list = ""
+    
+    for entry in lst:
+            for entry in lst:
+        bullet_list += ("- {}\n".format(entry))
+    
+    return bullet_lst
