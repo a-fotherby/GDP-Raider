@@ -1,5 +1,5 @@
 def request_template(sender, receiver, user_name, company_name):
-"""Initial email to request GDPR data from a company."""
+    """Initial email to request GDPR data from a company."""
     template = f"""\
 Subject: GDPR Request
 To: {receiver}
@@ -40,7 +40,13 @@ Yours sincerely,
 
     return template
 
-def removal_template(sender, receiver, removal_list):
+def removal_template(sender, receiver, user_name, removal_list):
+    
+    data_to_remove = ""
+    for entry in removal_list:
+        data_to_remove += ("- {}\n".format(entry))
+    
+    
     template = f"""\
 Subject: GDPR Request
 To: {receiver}
@@ -49,29 +55,42 @@ Hello,
 
 In accordance with Article 17 of the European General Data Protection Regulation, please proceed to the erasure of my personal data without undue delay.
 
-- Account information, including my name, date of birth, e-mail address, billing/shipping address, phone number, and stored payment card data.
-- User-generated content, which may include things such as photos, tracked activities, statistics, comments, or messages. 
-- Store or Site Data, which may include information on past orders, product reviews, comments in forums, comments on website content.
-- Customer Service Contacts, if I have contacted customer service in the past to resolve any issues, any contact history. 
-- Marketing tracking or behavior data, which may include things such as open and click rate, website user behavior, browser user agent, user preferences, inferred user behavior, etc.
+Please delete the following information associated with my accounts:
 
+{data_to_remove}
 Accounts may be associated with the following login credentials.
 
 Email addresses: [list your email addresses]
 Phone number: [list your email phone numbers]
 User name: [list your user names]
 
-Please confirm when this operation has been completed."""
-    
-    return None
+Please confirm when this operation has been completed.
 
-def followup_template(sender, receiver, last_date):
+Best wishes,
+
+{user_name}
+"""
+    
+    return template
+
+def followup_template(sender, receiver, user_name, last_date):
     template = f"""\
 Subject: GDPR Request
 To: {receiver}
 From {sender}
 Hello,
 
-Please confirm when this operation has been completed."""
+I am following up on the GDPR request made on {last_date}. I am reminding you that in accordance with In accordance with Article 17 of the
+European General Data Protection Regulation you must comply with my requst within one month of the intial request. This time frame has now elapsed
+and I am entitled to take legal action against your organisation.
+
+Please comply within the next two weeks or I will be forced to initiate legal preoceedings.
+
+Please confirm when this operation has been completed.
+
+Best wishes,
+
+{user_name}
+"""
     
     return None
