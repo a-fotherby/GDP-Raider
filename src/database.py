@@ -12,10 +12,17 @@ from os import listdir
 redis_url = 'redis://localhost:6379'
 conn = redis.from_url(redis_url)
 
+def decode(b):
+    return b.decode('utf-8')
+
 def get_user_details(user_hash):
+    username = conn.hget(user_hash, 'username')
+    username = decode(username)
+    legal = conn.hget(user_hash, 'legal-name')
+    legal = decode(legal)
     return {
-            'username':conn.hget(user_hash, 'username'),
-            'legal-name':conn.hget(user_hash, 'legal-name')
+            'username':username,
+            'legal-name': legal
     }
 
 def set_user_details(user_hash, details):
@@ -24,13 +31,14 @@ def set_user_details(user_hash, details):
 
 def get_company(slug):
     return {
-            'name':conn.hget(slug, 'name'),
-            'email':conn.hget(slug, 'email')
+            'name':decode(conn.hget(slug, 'name')),
+            'email':decode(conn.hget(slug, 'email'))
             }
 
 companies_set = 'companies'
 def get_companies():
     _, companies = conn.sscan(companies_set)
+    companies = [decode(c) for c in companies]
     return companies
 
 def add_company(slug, details):
@@ -43,10 +51,12 @@ def get_user_email_path(user_hash, company_slug):
 
 def get_emails(user_hash, company_slug):
     emails = conn.lrange(get_user_email_path(user_hash, company_slug), 0, -1)
+    emails = [decode(e) for e in emails]
     return [json.loads(email) for email in emails]
 
 def get_last_response(user_hash, company_slug):
     latest = conn.lindex(get_user_email_path(user_hash, company_slug), 0)
+    latest = decode(latest)
     if latest == None:
         return None
     return json.loads(latest)
