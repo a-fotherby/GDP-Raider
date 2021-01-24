@@ -7,7 +7,7 @@ from os import listdir
 
 # Companies {slug, name, email address}
 
-# Users:Company [{email;time}]
+# Users:Company [{type;message;date}]
 
 redis_url = 'redis://localhost:6379'
 conn = redis.from_url(redis_url)
@@ -61,10 +61,11 @@ def get_last_response(user_hash, company_slug):
         return None
     return json.loads(latest)
 
-def add_email_to_db(user_hash, company_slug, email_body):
+def add_email_to_db(user_hash, company_slug, e_type, email_body):
     email = {
-            'timestamp':datetime.now().timestamp(),
-            'body':email_body
+            'date':datetime.now().timestamp(),
+            'msg':email_body,
+            'type':e_type
             }
     email = json.dumps(email)
     conn.lpush(get_user_email_path(user_hash, company_slug), email)

@@ -12,6 +12,8 @@ app = Flask(__name__)
 #Populate companies field
 db.ingest_company_db()
 
+dummy_user = "user"
+
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -75,7 +77,8 @@ def get_companies():
 
 @app.route('/api/get-company/<company>')
 def get_company(company):
-    return db.get_company(company)
+    emails = db.get_emails(dummy_user, company)
+    return {'company':db.get_company(company), 'interaction':emails}
 
 @app.route('/api/set-user', methods=['POST'])
 def set_user():
