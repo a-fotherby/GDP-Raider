@@ -37,7 +37,7 @@ def get_company(slug):
 
 companies_set = 'companies'
 def get_companies():
-    _, companies = conn.sscan(companies_set)
+    _, companies = conn.smembers(companies_set)
     companies = [decode(c) for c in companies]
     return companies
 
