@@ -34,7 +34,7 @@ def get_companies():
     return companies
 
 def add_company(slug, details):
-    conn.sadd(companies, slug) 
+    conn.sadd(companies_set, slug) 
     for key,value in details.items():
         conn.hset(slug, key, value)
 
@@ -61,10 +61,12 @@ def add_email_to_db(user_hash, company_slug, email_body):
 
 def ingest_company_db():
     path = 'company_database'
-    files = os.listdir(path)
+    files = listdir(path)
     for filename in files:
-        path = f"{path}/{filename}"
-        blob = json.load(path)
+        filepath = f"{path}/{filename}"
+        print(filepath)
+        with open(filepath) as file:
+            blob = json.load(file)
 
         slug = blob['slug']
         email = blob['email']
