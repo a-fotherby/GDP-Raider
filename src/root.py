@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import email_templates as templates
 from emailing import send_email
 import database as db
+import json
 
 app = Flask(__name__)
 
@@ -70,11 +71,11 @@ def add_company():
 
 @app.route('/api/get-companies')
 def get_companies():
-    return db.get_companies()
+    return json.dumps(db.get_companies())
 
 @app.route('/api/get-company/<company>')
-def get_company(c):
-    return db.get_company(c)
+def get_company(company):
+    return db.get_company(company)
 
 @app.route('/api/set-user', methods=['POST'])
 def set_user():
