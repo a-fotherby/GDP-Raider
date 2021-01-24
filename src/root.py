@@ -2,54 +2,84 @@ from flask import Flask, request
 import redis
 from werkzeug.utils import secure_filename
 
-import send_request as sr
+import templates
+from emailing import send_email
+import database as db
 
 app = Flask(__name__)
 
-redis_url = 'redis://localhost:6379'
-conn = redis.from_url(redis_url)
-
 @app.route('/')
-def test():
-    return 'Hello, World'
+def index():
+    return "TODO WEBPAGE"
 
-@app.route('/api/companies')
-def getcompanies():
-    companies = []
-    return companies
+@app.route('/api/send-request/<userid>', methods=['POST'])
+def endpoint_send_request(userid):
+    sender = request.form['sender']
+    company_id = request.form['company-id']
+    login_credentials = request.form['login_credentials']
+    target = request.form['target_email']
 
-@app.route('/api/companies/<company>')
-def getcompanydets(company):
-    dets = []
-    return dets
+    user = db.get_user_details(userid)
+    target_email = db.get_company(company_id)['email']
+    body = templates.request_template(sender, target_email, user['legal-name'], login_credentials)
 
-@app.route('/api/<username>/<company>')
-def getusercompanydetails(username, company):
-    details = {}
-    return details
+    send_email(body, sender, target_email)
+    db.save_email(userid, company_id, body)
 
-@app.route('/api/add-company')
-def addcompany(company, details):
-    pass
+@app.route('/api/send-removal/<userid>', methods=['POST'])
+def endpoint_send_removal(userid):
+    sender = request.form['sender']
+    company_id = request.form['company-id']
+    removal_list = request.form['removal_list']
+    login_credentials = request.form['login_credentials']
 
-@app.route('/api/getemailtext/<kind>')
-def getemailtext(kind):
-    return ""
+    user = db.get_user_details(userid)
+    target_email = db.get_company(company_id)['email']
+    body = templates.removal_template(sender, target_email, user['legal-name'], removal_list, login_credentials)
 
-@app.route('/api/send-email/<username>')
-def send_email(username):
-    msg = request.form['email-text']
-    src = request.form['sender']
-    dst = request.form['destination']
-    sr.send_email(msg, src, dst)
+    send_email(body, sender, target_email)
+    db.save_email(userid, company_id, body)
 
-@app.route('/api/getemails/<username>/<company>')
-def getemails(username, company):
-    resp = conn.lrange(f"{username}:{company}:emails", 0, -1)
-    return str(resp)
+@app.route('/api/send-followup/<userid>', methods=['POST'])
+def endpoint_send_followup(userid):
+    sender = request.form['sender']
+    company_id = request.form['company-id']
+    login_credentials = request.form['login_credentials']
 
-@app.route('/api/addemail/<username>/<company>', methods=['GET', 'POST'])
-def setemail(username, company):
-    email = "test_email"
-    resp = conn.lpush(f"{username}:{company}:emails", email)
-    return str(resp)
+    user = db.get_user_details(userid)
+    target_email = db.get_company(company_id)['email']
+    previous_date = db.get_last_response(userid, company_id)['timestamp']
+    previous_date = datetime.fromtimestamp(previous_date).strftime('%Y-%m-%d')
+    body = templates.followup_template(sender, target_email, user['legal-name'], previous_date)
+
+    send_email(body, sender, target_email)
+    db.save_email(userid, company_id, body)
+
+@app.route('/api/get-emails/<userid>/<company-id>')
+def get_emails(userid, companyid):
+    return db.get_emails(userid, companyid)
+
+@app.route('/api/new-company', methods=['POST'])
+def add_company():
+    company_name = request.form['company-name']
+    email_address = request.form['email_address']
+    db.add_company(company_name, {'name':company_name, 'email':email_address})
+
+@app.route('/api/get-companies')
+def get_companies():
+    return db.get_companies()
+
+@app.route('/api/set-user', methods=['POST'])
+def set_user():
+    userid = request.form['userid']
+    legal_name = request.form['legal-name']
+
+    db.set_user_details(userid, {'username':userid, 'legal-name':legal_name})
+
+@app.route('/api/add-email', methods=['POST'])
+def add_email():
+    userid = request.form['userid']
+    companyid = request.form['companyid']
+    email = request.form['email']
+
+    db.add_email_to_db(userid, companyid, email)
