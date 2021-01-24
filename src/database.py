@@ -1,6 +1,7 @@
 import redis
 import json
 from datetime import datetime
+from os import listdir
 
 # Users {username, password, legal name}
 
@@ -57,3 +58,14 @@ def add_email_to_db(user_hash, company_slug, email_body):
             }
     email = json.dumps(email)
     conn.lpush(get_user_email_path(user_hash, company_slug), email)
+
+def ingest_company_db():
+    path = 'company_database'
+    files = os.listdir(path)
+    for filename in files:
+        path = f"{path}/{filename}"
+        blob = json.load(path)
+
+        slug = blob['slug']
+        email = blob['email']
+        add_company(slug, {'name':slug, 'email':email})

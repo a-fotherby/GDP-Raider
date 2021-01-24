@@ -8,6 +8,9 @@ import database as db
 
 app = Flask(__name__)
 
+#Populate companies field
+db.ingest_company_db()
+
 @app.route('/')
 def index():
     return render_template("index.html")
