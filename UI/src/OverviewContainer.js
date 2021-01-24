@@ -87,7 +87,7 @@ class OverviewContainer extends React.Component {
                                     Here you can see an overview of the company and the available information which was
                                     extracted from your previous data requests.
                                 </p>
-                                <Form style={{border: '2px solid #000000'}}>
+                                <Form style={{border: '2px solid #000000', borderRadius: '5px'}}>
                                     <Form.Group as={Row}>
                                         <Form.Label column sm="3">
                                             URL
@@ -118,7 +118,7 @@ class OverviewContainer extends React.Component {
                                             Data
                                         </Form.Label>
                                         <Col sm="9">
-                                            <Form.Control as="textarea" rows={5} readOnly
+                                            <Form.Control as="textarea" rows={10} readOnly
                                                           defaultValue={this.props.profile.data}/>
                                         </Col>
                                     </Form.Group>
@@ -135,14 +135,17 @@ class OverviewContainer extends React.Component {
                                     {
                                         this.props.profile.interaction
                                             .map(entry => (
-                                                <div style={{border: '2px solid #000000'}}>
+                                                <div style={{border: '2px solid #000000', marginTop:"10px", borderRadius: '5px'}}>
                                                     <Form.Group as={Row}>
                                                         <Form.Label column sm="3">
                                                             {entry.date}
                                                         </Form.Label>
                                                         <Col sm="9">
-                                                            <Form.Control as="textarea" plaintext readOnly
-                                                                          defaultValue={entry.type + " (" + entry.iid + ")\n" + entry.msg}>
+                                                            <Form.Control plaintext readOnly
+                                                                          defaultValue={entry.type + " (" + entry.iid + ")"}>
+                                                            </Form.Control>
+                                                            <Form.Control as="textarea" readOnly rows="5"
+                                                                          defaultValue={entry.msg}>
                                                             </Form.Control>
                                                         </Col>
                                                     </Form.Group>
