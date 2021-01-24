@@ -72,6 +72,10 @@ def add_company():
 def get_companies():
     return db.get_companies()
 
+@app.route('/api/get-company/<company>')
+def get_company(c):
+    return db.get_company(c)
+
 @app.route('/api/set-user', methods=['POST'])
 def set_user():
     userid = request.form['userid']
