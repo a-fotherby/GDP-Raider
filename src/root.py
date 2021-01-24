@@ -20,6 +20,7 @@ def index():
 
 @app.route('/api/send-request', methods=['POST'])
 def endpoint_send_request():
+    print(request.get_json())
     sender = request.form['sender']
     company_id = request.form['company-id']
     login_credentials = request.form['login_credentials']
