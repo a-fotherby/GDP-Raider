@@ -61,7 +61,7 @@ class OverviewContainer extends React.Component {
                     onHide={() => this.setLegalThreatShow(false)}
                 />
                 <Row>
-                    <Col><h1 style={{textAlign: "left", padding: "8px"}}><b>{this.props.profile.url}</b></h1></Col>
+                    <Col><h1 style={{textAlign: "left", padding: "8px"}}><b>{this.props.profile.name}</b></h1></Col>
                 </Row>
                 <Row>
                     <Col>
@@ -90,10 +90,10 @@ class OverviewContainer extends React.Component {
                                 <Form style={{border: '2px solid #000000', borderRadius: '5px'}}>
                                     <Form.Group as={Row}>
                                         <Form.Label column sm="3">
-                                            URL
+                                            Email
                                         </Form.Label>
                                         <Col sm="9">
-                                            <Form.Control plaintext readOnly defaultValue={this.props.profile.url}/>
+                                            <Form.Control plaintext readOnly defaultValue={this.props.profile.email}/>
                                         </Col>
                                     </Form.Group>
                                     <Form.Group as={Row}>

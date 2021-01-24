@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import {Form} from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Container";
-import {fetchCompanies} from "./api/APICalls";
+import {fetchCompanies, fetchProfile} from "./api/APICalls";
 import Button from "react-bootstrap/Button";
 import {ArrowRepeat} from "react-bootstrap-icons";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
@@ -19,6 +19,7 @@ class SiteList extends React.Component {
     selectOption(entry) {
         console.log(entry);
         this.props.dispatch(set_companies_selected(entry));
+        fetchProfile(this.props.dispatch, entry);
     }
 
     selectRefresh() {
@@ -53,8 +54,8 @@ class SiteList extends React.Component {
                             .map(entry => (
                                 <ListGroup.Item
                                     style={{textAlign:"left"}}
-                                    action onClick={() => this.selectOption(entry.id)}
-                                                active={this.props.selected === entry.id}>{entry.url}</ListGroup.Item>
+                                    action onClick={() => this.selectOption(entry)}
+                                                active={this.props.selected === entry}>{entry}</ListGroup.Item>
                             ))
                     }
                 </ListGroup>

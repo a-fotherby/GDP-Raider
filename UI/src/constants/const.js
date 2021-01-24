@@ -1,6 +1,6 @@
-export const BASE_URL = "localhost:5000";
+export const BASE_URL = "";
 export const GET_COMPANIES_URL = BASE_URL+"/api/get-companies";
-
+export const GET_PROFILE_URL = BASE_URL+"/api/get-company";
 
 export const PRODUCTION = true;
 
@@ -89,7 +89,7 @@ Jan Helmich`,
             iid: "req2",
             type: "data response",
             msg: `Generic response as to why they unfortunately are unable to fulfill my request to inspect all data.
-            
+
     Facebook says that GDPR requires their response to use clear language.
     This means that their response should be understandable by the "average person".
     But they consider their data is too complex for that average person.
@@ -104,7 +104,7 @@ Mark Zuckerberg
             iid: "req3",
             type: "delete request",
             msg: `Dear Sir or Madam
-            
+
 I, Jan Helmich, would like to make a request for the erasure of my data belonging to account associated to
 jan.helmich@gmx.de.
 

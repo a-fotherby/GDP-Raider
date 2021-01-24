@@ -1,9 +1,9 @@
-import {GET_COMPANIES, SET_COMPANIES_SELECTED, SET_PROFILE_LOADING, SET_TAB_SELECTED} from "../constants/const";
+import {GET_PROFILE, SET_COMPANIES_SELECTED, SET_PROFILE_LOADING, SET_TAB_SELECTED} from "../constants/const";
 
 
 export const get_profile = (profile) => {
     return {
-        type: GET_COMPANIES,
+        type: GET_PROFILE,
         payload: profile,
     }
 }
