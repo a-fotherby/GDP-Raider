@@ -11,6 +11,8 @@ from os import listdir
 
 redis_url = 'redis://localhost:6379'
 conn = redis.from_url(redis_url)
+conn.hset('user', 'username', 'user')
+conn.hset('user', 'legal-name', 'legal-name')
 
 def decode(b):
     return b.decode('utf-8')

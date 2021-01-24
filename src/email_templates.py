@@ -1,7 +1,7 @@
 def request_template(sender, receiver, user_name, login_credentials):
     """Initial email to request GDPR data from a company."""
     
-    login_string=compose_list(login_credentials)
+    login_string=login_credentials
     
     template = f"""\
 Subject: GDPR Request
@@ -98,5 +98,5 @@ Best wishes,
     
     return None
 
-def compose_bullet_list(lst):
+def compose_list(lst):
     return "".join(f"- {entry}\n" for entry in lst)
