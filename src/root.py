@@ -1,8 +1,8 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import redis
 from werkzeug.utils import secure_filename
 
-import templates
+import email_templates as templates
 from emailing import send_email
 import database as db
 
@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "TODO WEBPAGE"
+    return render_template("index.html")
 
 @app.route('/api/send-request/<userid>', methods=['POST'])
 def endpoint_send_request(userid):
