@@ -55,7 +55,7 @@ def endpoint_send_followup(userid):
     send_email(body, sender, target_email)
     db.save_email(userid, company_id, body)
 
-@app.route('/api/get-emails/<userid>/<company-id>')
+@app.route('/api/get-emails/<userid>/<companyid>')
 def get_emails(userid, companyid):
     return db.get_emails(userid, companyid)
 

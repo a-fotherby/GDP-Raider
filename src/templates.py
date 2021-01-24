@@ -99,11 +99,4 @@ Best wishes,
     return None
 
 def compose_bullet_list(lst):
-    
-    bullet_list = ""
-    
-    for entry in lst:
-            for entry in lst:
-        bullet_list += ("- {}\n".format(entry))
-    
-    return bullet_lst
+    return "".join(f"- {entry}\n" for entry in lst)
