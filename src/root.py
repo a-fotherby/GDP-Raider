@@ -18,39 +18,45 @@ dummy_user = "user"
 def index():
     return render_template("index.html")
 
-@app.route('/api/send-request/<userid>', methods=['POST'])
-def endpoint_send_request(userid):
+@app.route('/api/send-request', methods=['POST'])
+def endpoint_send_request():
     sender = request.form['sender']
     company_id = request.form['company-id']
     login_credentials = request.form['login_credentials']
     target = request.form['target_email']
+
+    userid = dummy_user
 
     user = db.get_user_details(userid)
     target_email = db.get_company(company_id)['email']
     body = templates.request_template(sender, target_email, user['legal-name'], login_credentials)
 
     send_email(body, sender, target_email)
-    db.save_email(userid, company_id, body)
+    db.save_email(userid, company_id, 'data-request', body)
 
-@app.route('/api/send-removal/<userid>', methods=['POST'])
-def endpoint_send_removal(userid):
+@app.route('/api/send-removal', methods=['POST'])
+def endpoint_send_removal():
     sender = request.form['sender']
     company_id = request.form['company-id']
     removal_list = request.form['removal_list']
     login_credentials = request.form['login_credentials']
+
+    userid = dummy_user
 
     user = db.get_user_details(userid)
     target_email = db.get_company(company_id)['email']
     body = templates.removal_template(sender, target_email, user['legal-name'], removal_list, login_credentials)
 
     send_email(body, sender, target_email)
-    db.save_email(userid, company_id, body)
+    db.save_email(userid, company_id, 'data-removal', body)
 
-@app.route('/api/send-followup/<userid>', methods=['POST'])
-def endpoint_send_followup(userid):
+@app.route('/api/send-followup', methods=['POST'])
+def endpoint_send_followup():
     sender = request.form['sender']
     company_id = request.form['company-id']
     login_credentials = request.form['login_credentials']
+
+    userid = dummy_user
 
     user = db.get_user_details(userid)
     target_email = db.get_company(company_id)['email']
@@ -59,7 +65,7 @@ def endpoint_send_followup(userid):
     body = templates.followup_template(sender, target_email, user['legal-name'], previous_date)
 
     send_email(body, sender, target_email)
-    db.save_email(userid, company_id, body)
+    db.save_email(userid, company_id, 'followup', body)
 
 @app.route('/api/get-emails/<userid>/<companyid>')
 def get_emails(userid, companyid):

@@ -61,7 +61,7 @@ def get_last_response(user_hash, company_slug):
         return None
     return json.loads(latest)
 
-def add_email_to_db(user_hash, company_slug, e_type, email_body):
+def save_email(user_hash, company_slug, e_type, email_body):
     email = {
             'date':datetime.now().timestamp(),
             'msg':email_body,
