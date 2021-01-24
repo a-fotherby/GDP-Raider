@@ -7,6 +7,7 @@ import {QuestionCircle} from "react-bootstrap-icons";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {connect} from "react-redux";
+import {postDataRequest} from "./api/APICalls";
 
 
 class RequestDataModal extends React.Component {
@@ -30,6 +31,8 @@ class RequestDataModal extends React.Component {
         console.log(this.state.account);
         console.log(this.props.selected);
         // Dispatch fetch here
+        postDataRequest(this.state.name, this.state.account, this.props.selected);
+
         onHide()
 
         this.setState({allData: false, data: [], name: [], account: []})

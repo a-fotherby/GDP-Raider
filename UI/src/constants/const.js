@@ -1,6 +1,7 @@
 export const BASE_URL = "";
 export const GET_COMPANIES_URL = BASE_URL+"/api/get-companies";
 export const GET_PROFILE_URL = BASE_URL+"/api/get-company";
+export const POST_DATA_REQEUST = BASE_URL+"/api/send-request";
 
 export const PRODUCTION = true;
 
@@ -67,7 +68,6 @@ export const DEFAULT_PROFILE = {
 +- your_topics`,
     interaction: [
         {
-            iid: "req1",
             type: "data request",
             msg: `Dear Sir or Madam
 
@@ -86,7 +86,6 @@ Jan Helmich`,
             date: "15/01/2021",
         },
         {
-            iid: "req2",
             type: "data response",
             msg: `Generic response as to why they unfortunately are unable to fulfill my request to inspect all data.
 
@@ -101,7 +100,6 @@ Mark Zuckerberg
             date: "16/01/2021",
         },
         {
-            iid: "req3",
             type: "delete request",
             msg: `Dear Sir or Madam
 

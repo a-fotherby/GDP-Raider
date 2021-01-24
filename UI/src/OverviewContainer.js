@@ -142,7 +142,7 @@ class OverviewContainer extends React.Component {
                                                         </Form.Label>
                                                         <Col sm="9">
                                                             <Form.Control plaintext readOnly
-                                                                          defaultValue={entry.type + " (" + entry.iid + ")"}>
+                                                                          defaultValue={entry.type}>
                                                             </Form.Control>
                                                             <Form.Control as="textarea" readOnly rows="5"
                                                                           defaultValue={entry.msg}>
