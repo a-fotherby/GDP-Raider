@@ -21,10 +21,11 @@ def index():
 @app.route('/api/send-request', methods=['POST'])
 def endpoint_send_request():
     print(request.get_json())
-    sender = request.form['sender']
-    company_id = request.form['company-id']
-    login_credentials = request.form['login_credentials']
-    target = request.form['target_email']
+    data = request.get_json()
+    sender = data['sender']
+    company_id = data['company-id']
+    login_credentials = data['login_credentials']
+    target = data['target_email']
 
     userid = dummy_user
 
@@ -37,10 +38,11 @@ def endpoint_send_request():
 
 @app.route('/api/send-removal', methods=['POST'])
 def endpoint_send_removal():
-    sender = request.form['sender']
-    company_id = request.form['company-id']
-    removal_list = request.form['removal_list']
-    login_credentials = request.form['login_credentials']
+    data = request.get_json()
+    sender = data['sender']
+    company_id = data['company-id']
+    removal_list = data['removal_list']
+    login_credentials = data['login_credentials']
 
     userid = dummy_user
 
@@ -53,9 +55,10 @@ def endpoint_send_removal():
 
 @app.route('/api/send-followup', methods=['POST'])
 def endpoint_send_followup():
-    sender = request.form['sender']
-    company_id = request.form['company-id']
-    login_credentials = request.form['login_credentials']
+    data = request.get_json()
+    sender = data['sender']
+    company_id = data['company-id']
+    login_credentials = data['login_credentials']
 
     userid = dummy_user
 
