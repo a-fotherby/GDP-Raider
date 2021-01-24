@@ -22,10 +22,9 @@ def index():
 def endpoint_send_request():
     print(request.get_json())
     data = request.get_json()
-    sender = data['sender']
-    company_id = data['company-id']
-    login_credentials = data['login_credentials']
-    target = data['target_email']
+    sender = data['name']
+    company_id = data['company']
+    login_credentials = data['account']
 
     userid = dummy_user
 
@@ -39,10 +38,10 @@ def endpoint_send_request():
 @app.route('/api/send-removal', methods=['POST'])
 def endpoint_send_removal():
     data = request.get_json()
-    sender = data['sender']
-    company_id = data['company-id']
+    sender = data['name']
+    company_id = data['company']
     removal_list = data['removal_list']
-    login_credentials = data['login_credentials']
+    login_credentials = data['account']
 
     userid = dummy_user
 
@@ -56,9 +55,9 @@ def endpoint_send_removal():
 @app.route('/api/send-followup', methods=['POST'])
 def endpoint_send_followup():
     data = request.get_json()
-    sender = data['sender']
-    company_id = data['company-id']
-    login_credentials = data['login_credentials']
+    sender = data['name']
+    company_id = data['company']
+    login_credentials = data['account']
 
     userid = dummy_user
 
